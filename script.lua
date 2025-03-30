@@ -41,7 +41,19 @@ function start_hop()
 	end
 	hop()
 end
-local phases = { ["http://www.roblox.com/asset/?id=9709149431"] = '8', ["http://www.roblox.com/asset/?id=9709149052"] = '7', ["http://www.roblox.com/asset/?id=9709143733"] = '6', ["http://www.roblox.com/asset/?id=9709150401"] = '5', ["http://www.roblox.com/asset/?id=9709135895"] = '4', ["http://www.roblox.com/asset/?id=9709139597"] = '3', ["http://www.roblox.com/asset/?id=9709150086"] = '2', ["http://www.roblox.com/asset/?id=9709149680"] = '1'}
+
+local phases = {
+	["http://www.roblox.com/asset/?id=9709149431"] = '8', 
+	["http://www.roblox.com/asset/?id=9709149052"] = '7',
+	["http://www.roblox.com/asset/?id=9709143733"] = '6',
+	["http://www.roblox.com/asset/?id=9709150401"] = '5',
+	["http://www.roblox.com/asset/?id=9709135895"] = '4',
+	["http://www.roblox.com/asset/?id=9709139597"] = '3',
+	["http://www.roblox.com/asset/?id=9709150086"] = '2',
+	["http://www.roblox.com/asset/?id=9709149680"] = '1',
+};
+
+
 if game:GetService("Lighting"):FindFirstChild('Sky') then
 	print('Found moon texture')
 	local texture = game:GetService("Lighting").Sky.MoonTextureId
