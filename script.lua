@@ -50,7 +50,7 @@ if game:GetService("Lighting"):FindFirstChild('Sky') then
 	
 	label.Text= 'Current phase ' .. tostring(phase) .. '\nwith percent ' .. tostring(phase / 8 * 100) .. '%'
 	
-	if true then	
+	if phase == '8' then	
 		label.TextColor3 = Color3.new(0, 1, 0)	
 	else 		
 		start_hop()
