@@ -23,6 +23,51 @@ hop_label.Text = 'Not Hopping'
 hop_label.TextColor3 = Color3.new(1, 0, 0)
 hop_label.Position = UDim2.new(0, 650, 0, 60)	
 hop_label.Size = UDim2.new(0, 200, 0, 40)
+
+
+
+-- Get player character
+function get_character()
+	local player = game.Players.LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	return character
+end
+
+-- Tween to part 
+function tween_to(part) 
+	local character
+	pcall(function() character = get_character() end)
+	if character == nil then
+		print('TWEEN: Failed to find character')	
+		return	
+	end		
+	
+	local dist = (part.Position - character.HumanoidRootPart.Position).Magnitude
+	local speed = 0
+
+	if dist < 150 then
+		speed = 20000
+	elseif dist < 200 then
+		speed = 5000
+	elseif dist < 300 then
+		speed = 1030
+	elseif dist < 500 then
+		speed = 725
+	elseif dist < 1000 then
+		speed = 365
+	elseif dist >= 1000 then
+		speed = 365
+	end
+
+	game:GetService("TweenService"):Create(
+		character.HumanoidRootPart,
+		TweenInfo.new(dist/speed, Enum.EasingStyle.Linear),
+		{CFrame = part.CFrame}
+	):Play()
+
+	wait(dist/speed)
+end
+
 function hop() 
 	local remote = game:GetService("ReplicatedStorage"):WaitForChild("__ServerBrowser", 9e9)
 	local result = remote:InvokeServer(unpack({ [1] = 1 }))		
@@ -57,9 +102,13 @@ while attempts <= (1/wait_time * attempt_time) do
         found = true
 
         label.TextColor3 = Color3.new(0, 1, 0)	
-        label.Text = 'Found Barista'
+        label.Text = 'Found Barista ('..tostring(attempts)..'/'..tostring(1/wait_time * attempt_time)..')'
 
-		-- local target = game:GetService('Workspace').NPCs['Barista Cousin']
+		local target = game:GetService('Workspace').NPCs['Barista Cousin']
+
+        print(target.Position)
+        tween_to(target)
+
 		-- print('Found: ' .. target.Name)
 	
 		-- local position = game.Workspace.CurrentCamera:WorldToScreenPoint(target.Position)
@@ -67,8 +116,9 @@ while attempts <= (1/wait_time * attempt_time) do
 		
 		-- local label = player.PlayerGui.Injected.TextLabel	
 		-- label.Position = udim
+        break
 	end
-
+        
     label.Text = 'Finding Barista... ('..tostring(attempts)..'/'..tostring(1/wait_time * attempt_time)..')'
     wait(wait_time)
     attempts += 1
@@ -78,3 +128,6 @@ if not found then
     label.Text = 'Failed to find Barista'
     start_hop()
 end
+
+
+print(game:GetService('Workspace').NPCs:FindFirstChild('Barista Cousin').ClassName)
