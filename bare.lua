@@ -78,7 +78,16 @@ function tween_to(part)
 
 	wait(dist/speed)
 end
-
+math.randomseed(os.time()) -- so that the results are always different
+function FYShuffle( tInput )
+    local tReturn = {}
+    for i = #tInput, 1, -1 do
+        local j = math.random(i)
+        tInput[i], tInput[j] = tInput[j], tInput[i]
+        table.insert(tReturn, tInput[i])
+    end
+    return tReturn
+end
 function hop() 
 	local remote = game:GetService("ReplicatedStorage"):WaitForChild("__ServerBrowser", 9e9)
 	local result = remote:InvokeServer(unpack({ [1] = 1 }))		
@@ -88,14 +97,16 @@ function hop()
 		if value['Count'] <= 8 then			
 			table.insert(uuids, uuid)
 		end		
-	end	
-	print(#uuids)
-	local main_uuid = uuids[math.random(1, #uuids)]
-	print(main_uuid)
-	remote:InvokeServer(unpack({
-		[1] = "teleport";
-		[2] = main_uuid 
-	}))
+	end
+	
+	uuids = FYShuffle(uuids)
+
+	for uuid, _ in pairs(uuids) do
+		remote:InvokeServer(unpack({
+			[1] = "teleport";
+			[2] = uuid 
+		}))
+	end
 end
 function start_hop()
 	local hop_time = 15
