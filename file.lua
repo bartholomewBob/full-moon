@@ -26,7 +26,7 @@ function hop()
 
 	local uuids = {}
 	for uuid, value in pairs(result) do		
-		if value['Count'] <= 8 then			
+		if value['Count'] <= 11 then			
 			table.insert(uuids, uuid)
 		end		
 	end	
