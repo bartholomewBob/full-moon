@@ -104,11 +104,19 @@ while attempts <= (1/wait_time * attempt_time) do
         label.TextColor3 = Color3.new(0, 1, 0)	
         label.Text = 'Found Barista ('..tostring(attempts)..'/'..tostring(1/wait_time * attempt_time)..')'
 
-		local target = game:GetService('Workspace').NPCs['Barista Cousin']
-
+	local target = game:GetService('Workspace').NPCs['Barista Cousin']:FindFirstChild('HumanoidRootPart')
+	
+	local args = {
+	    [1] = "ColorsDealer";
+	    [2] = "1";
+	}
+	
+	local result = game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 9e9):WaitForChild("CommF_", 9e9):InvokeServer(unpack(args))
+	print(result[1])
         print(target.Position)
         tween_to(target)
 
+		
 		-- print('Found: ' .. target.Name)
 	
 		-- local position = game.Workspace.CurrentCamera:WorldToScreenPoint(target.Position)
