@@ -23,14 +23,20 @@ hop_label.Size = UDim2.new(0, 200, 0, 40)
 function hop() 
 	local remote = game:GetService("ReplicatedStorage"):WaitForChild("__ServerBrowser", 9e9)
 	local result = remote:InvokeServer(unpack({ [1] = 1 }))		
+
+	local uuids = {}
 	for uuid, value in pairs(result) do		
 		if value['Count'] <= 8 then			
-			remote:InvokeServer(unpack({
-				[1] = "teleport";
-				[2] = uuid
-			}))
+			table.insert(uuids, uuid)
 		end		
 	end	
+	print(#uuids)
+	local main_uuid = uuids[math.random(1, #uuids)]
+	print(main_uuid)
+	remote:InvokeServer(unpack({
+		[1] = "teleport";
+		[2] = main_uuid 
+	}))
 end
 function start_hop()
 	local hop_time = 15
