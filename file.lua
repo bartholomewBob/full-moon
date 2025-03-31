@@ -20,7 +20,6 @@ hop_label.Text = 'Not Hopping'
 hop_label.TextColor3 = Color3.new(1, 0, 0)
 hop_label.Position = UDim2.new(0, 650, 0, 60)	
 hop_label.Size = UDim2.new(0, 200, 0, 40)
-math.randomseed(os.time()) -- so that the results are always different
 function FYShuffle( tInput )
     local tReturn = {}
     for i = #tInput, 1, -1 do
@@ -32,22 +31,27 @@ function FYShuffle( tInput )
 end
 function hop() 
 	local remote = game:GetService("ReplicatedStorage"):WaitForChild("__ServerBrowser", 9e9)
-	local result = remote:InvokeServer(unpack({ [1] = 1 }))		
 
 	local uuids = {}
-	for uuid, value in pairs(result) do		
-		if value['Count'] <= 8 then			
-			table.insert(uuids, uuid)
-		end		
+			
+	for i=1,10 do
+		local result = remote:InvokeServer(unpack({ [1] = i }))		
+
+		for uuid, value in pairs(result) do		
+			if value['Count'] < 12 then			
+				table.insert(uuids, uuid)
+			end		
+		end	
 	end
-	
+
 	uuids = FYShuffle(uuids)
 
-	for uuid, _ in pairs(uuids) do
+	for i, uuid in ipairs(uuids) do
 		remote:InvokeServer(unpack({
 			[1] = "teleport";
 			[2] = uuid 
 		}))
+         	wait(0.4 * i)
 	end
 end
 function start_hop()
