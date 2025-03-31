@@ -117,6 +117,10 @@ while attempts <= (1/wait_time * attempt_time) do
 
 	local target = game:GetService('Workspace').NPCs['Barista Cousin']:FindFirstChild('HumanoidRootPart')
 	
+        tween_to(target)
+
+	wait(10)
+
 	local args = {
 	    [1] = "ColorsDealer";
 	    [2] = "1";
@@ -130,10 +134,13 @@ while attempts <= (1/wait_time * attempt_time) do
 	}
 	
 	local result2 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 9e9):WaitForChild("CommF_", 9e9):InvokeServer(unpack(args))
+
+	
 	print(dump(result1))
 	print(dump(result2))
         print(target.Position)
-        tween_to(target)
+
+	start_hop()
 
 		
 		-- print('Found: ' .. target.Name)
