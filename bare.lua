@@ -119,7 +119,7 @@ while attempts <= (1/wait_time * attempt_time) do
 	
         tween_to(target)
 
-	wait(10)
+	wait(20)
 
 	local args = {
 	    [1] = "ColorsDealer";
