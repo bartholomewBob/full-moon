@@ -6,7 +6,18 @@ hop_label = nil
 if player.PlayerGui:FindFirstChild('Injected') then
 	player.PlayerGui:FindFirstChild('Injected'):Destroy()
 end
-
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
 local screen = Instance.new('ScreenGui')
 screen.Name = 'Injected'
 screen.Parent = player.PlayerGui
@@ -111,8 +122,16 @@ while attempts <= (1/wait_time * attempt_time) do
 	    [2] = "1";
 	}
 	
-	local result = game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 9e9):WaitForChild("CommF_", 9e9):InvokeServer(unpack(args))
-	print(result[1])
+	local result1 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 9e9):WaitForChild("CommF_", 9e9):InvokeServer(unpack(args))
+	
+	local args = {
+	    [1] = "ColorsDealer";
+	    [2] = "2";
+	}
+	
+	local result2 = game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 9e9):WaitForChild("CommF_", 9e9):InvokeServer(unpack(args))
+	print(dump(result1))
+	print(dump(result2))
         print(target.Position)
         tween_to(target)
 
