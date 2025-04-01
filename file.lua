@@ -80,15 +80,22 @@ if game:GetService("Lighting"):FindFirstChild('Sky') then
 	print('Found moon texture')
 	local texture = game:GetService("Lighting").Sky.MoonTextureId
 	local phase = phases[texture]
-	print(phase)	
 	
-	label.Text= 'Current phase ' .. tostring(phase) .. '\nwith percent ' .. tostring(phase / 8 * 100) .. '%'
-	
-	if phase == '8' then	
-		label.TextColor3 = Color3.new(0, 1, 0)	
-	else 		
-		start_hop()
-	end	
+	if phase then
+		print(phase)	
+		
+		label.Text= 'Current phase ' .. tostring(phase) .. '\nwith percent ' .. tostring(phase / 8 * 100) .. '%'
+		
+		if phase == '8' then	
+			label.TextColor3 = Color3.new(0, 1, 0)	
+		else 		
+			start_hop()
+		end		
+	else
+		print(texture)
+		label.Text = 'Unknown moon texture'
+	end
+
 else
 	print('Failed to find moon texture')
 	label.Text= 'Failed to find moon'
